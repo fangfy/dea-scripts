@@ -19,9 +19,10 @@ def pixels_of_interest(raster_path, geoms, band=None):
     with rasterio.open(raster_path) as src:
         input_g=[mapping(g) for g in geoms]
         out_image, out_transform = mask(src, input_g, crop=True, filled=False, pad=True)
-    if band:
+    if band is None:
+        return out_image
+    else:
         return out_image[band]
-    else: return out_image
 
 
 def main(projectfile, outputfile, wofs_summary,
